@@ -1,6 +1,6 @@
 services:
 
-  web1:
+  web:
     build: apache
     container_name: ubuntu_22_apache_php1
     working_dir: /var/www/html
@@ -8,7 +8,7 @@ services:
       - ./html:/var/www/html
       - ./apache/proxy.conf:/etc/apache2/sites-enabled/000-default.conf
     links: 
-      - db1:db1
+      - db:db
     ports:
       - "80:80"
       - "443:443"
@@ -23,8 +23,8 @@ services:
           cpus: "1"
           memory: "1G"
 
-  db1:
-    image: mariadb:10.7
+  db:
+    image: mariadb:11.4
     restart: unless-stopped
     ports:
       - 3306:3306
