@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+        ServerAdmin etomasayala@gmail.com
+        ServerName dc.local
+        ServerAlias dc.local
+        DocumentRoot "/var/www/html/dc/backend/web"
+        ErrorLog "/var/www/html/logs/dc-error.log"
+        CustomLog "/var/www/html/logs/dc-access.log" common env=!dontlog
+        LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+        SetEnvIf Request_URI "^/check\.txt$" dontlog
+        <Directory "/var/www/html/dc/backend/web">
+                AllowOverride All
+                Require all granted
+                Allow from all
+                Options Indexes FollowSymLinks
+        </Directory>
+</VirtualHost>
