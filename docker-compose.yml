@@ -46,7 +46,21 @@ services:
           memory: "1G"
     networks:
       - backend
-      
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge
