@@ -50,6 +50,18 @@ RUN sed -i 's/memory_limit = .*/memory_limit = 1024M/' /etc/php/7.4/apache2/php.
     sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1024M/' /etc/php/7.4/apache2/php.ini && \
     sed -i 's/post_max_size = .*/post_max_size = 512M/' /etc/php/7.4/apache2/php.ini
 
+# Install NVM and Node.js 24
+ENV NVM_DIR=/usr/local/nvm
+RUN mkdir -p $NVM_DIR && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+    . $NVM_DIR/nvm.sh && \
+    nvm install 24 && \
+    nvm alias default 24 && \
+    nvm use default
+
+ENV NODE_PATH=$NVM_DIR/versions/node/v24/lib/node_modules
+ENV PATH=$NVM_DIR/versions/node/v24/bin:$PATH
+
 EXPOSE 80 443
 
 WORKDIR /var/www/html
